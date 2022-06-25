@@ -3,30 +3,12 @@
     name: nginx
     state: installed
 
-- name: Download {{ COMPONENT }} code
+- name: Import common Role for Code Download
   ansible.builtin.include_role:
     name: common
     tasks_from: download
 
-# NGINX() {
-# CHECK_ROOT
-#  PRINT "Installing Nginx"
-#    yum install nginx -y &>>${LOG}
- #   CHECK_STAT $?
-  #
-   # PRINT "Download ${COMPONENT} Content"
-    #curl -s -L -o /tmp/${COMPONENT}.zip "https://github.com/roboshop-devops-project/${COMPONENT}/archive/main.zip" &>>${LOG}
-    #CHECK_STAT $?
-    
-   # PRINT "Clean OLD Content"
-    #cd /usr/share/nginx/html
-    #rm -rf * &>>${LOG}
-    #CHECK_STAT $?
-    
-    #PRINT "Extract ${COMPONENT} Content"
-    #unzip /tmp/${COMPONENT}.zip &>>${LOG}
-    #CHECK_STAT $?
-    
+
     #PRINT "Organize ${COMPONENT} Content"
     #mv ${COMPONENT}-main/* . && mv static/* . && rm -rf ${COMPONENT}-main README.md && mv localhost.conf /etc/nginx/default.d/roboshop.conf
     #CHECK_STAT $?
