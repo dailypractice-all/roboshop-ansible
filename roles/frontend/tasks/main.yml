@@ -4,7 +4,7 @@
     state: installed
 
 - name: Download {{ COMPONENT }} code
-  ansible.buitin.include_role:
+  ansible.builtin.include_role:
     name: common
     tasks_from: download
 
