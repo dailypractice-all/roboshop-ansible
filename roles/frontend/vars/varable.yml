@@ -1,4 +1,0 @@
-- name: Play level vars
-  hosts: localhost
-  vars:
-    var-1: WELCOM_ANSIBLE
