@@ -7,4 +7,4 @@
   ansible.builtin.unarchive:
     src: https://github.com/roboshop-devops-project/{{ COMPONENT }}/archive/main.zip
     dest: /tmp
-    remove_src: yes
+    remote_src: yes
