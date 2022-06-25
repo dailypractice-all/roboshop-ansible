@@ -1,14 +1,4 @@
-
-- name: Hello from frontend
+- name: Installing Nginx
   ansible.builtin.debug:
-    msg: frontend role
-
-
-- name: Print variable
-  ansible.builtin.debug:
-    msg: "{{ samplevar }}"
-
-- name: Install Java
-  ansible.builtin.yum:
-    name: java-1.8.0-openjdk-devel
-    state: latest
+    name: nginx
+    state: installed
