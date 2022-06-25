@@ -1,4 +1,4 @@
 - name: Installing Nginx
-  ansible.builtin.debug:
+  ansible.builtin.yum:
     name: nginx
     state: installed
