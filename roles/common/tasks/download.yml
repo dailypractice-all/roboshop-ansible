@@ -1,0 +1,4 @@
+- name: Downlaod {{ COMPONENT }} Component Achive
+  ansible.buitin.get_url:
+    url: https://github.com/roboshop-devops-project/{{COMPONENT}}/archive/main.zip
+    dest: /tmp/{{ COMPONENT }}.zip
