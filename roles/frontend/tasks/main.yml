@@ -3,7 +3,7 @@
   ansible.builtin.debug:
     msg: frontend role
 
-- name: Print myvar "{{ samplevar }}"
+- name: Print myvar
   vars_files:
     - variable.yml
   ansible.builtin.debug:
