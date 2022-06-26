@@ -6,11 +6,11 @@
     name: nodejs
     state: installed
 
-- name: Import common Role app configuration for nodejs
+- name: Import common Role app configuration for Nodejs
   ansible.builtin.include_role:
     name: common
     tasks_from: download
 
-- name: Install nodejs dependencies
+- name: Install Nodejs dependencies
   community.general.npm:
     path: "{{ APP_LOCATION }}"
