@@ -19,3 +19,7 @@
     src: /tmp/{{COMPONENT}}-main/{{SUFFIX}}
     dest: "{{ APP_LOCATION }}"
     remote_src: yes
+
+- name: Install nodejs dependencies
+  community.general.npm:
+    path: "{{ APP_LOCATION }}"
