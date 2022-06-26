@@ -6,7 +6,7 @@
     name: npm
     state: installed
 
-- name: Import common Role app configuration for npm
+- name: systemD Setup for {{ COMPONENT }} Service
   ansible.builtin.include_role:
     name: common
     tasks_from: download
