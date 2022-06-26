@@ -24,5 +24,5 @@
   ansible.builtin.systemd:
     name: "{{ COMPONENT }}"
     enabled: yes
-    state: restated
+    state: restarted
     daemon_reload: yes
