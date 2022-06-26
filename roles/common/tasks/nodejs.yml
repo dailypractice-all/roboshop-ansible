@@ -1,0 +1,17 @@
+
+#PRINT "Installing ${COMPONENT} dependencies for ${COMPONENT} component "
+# mv ${COMPONENT}-main ${COMPONENT} && cd ${COMPONENT} && npm install &>>${LOG}
+# CHECK_STAT $?
+
+- name: Setup Yum repo for Nodejs
+  ansible.builtin.shell: curl -sL https://rpm.nodesource.com/setup_lts.x
+
+- name: Install Nodejs
+  ansible.builtin.yum:
+    name: nodejs
+    state: installed
+
+- name: Import common Role app configuration for nodejs
+  ansible.builtin.include_role:
+    name: common
+    tasks_from: download
