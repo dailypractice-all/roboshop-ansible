@@ -9,7 +9,7 @@ shipping.dailypractice.internal
 [PAYMENT]
 payment.dailypractice.internal
 [MONGODB]
-mongodb.dailypractice.internal
+mongodb1.dailypractice.internal
 [MYSQL]
 mysql.dailypractice.internal
 [RABBITMQ]
