@@ -6,7 +6,7 @@
 - name: Install redis
   ansible.builtin.yum:
     name: redis-6.2.7
-    state: intalled
+    state: installed
 
 - name: Replace Listen address in redis Configuration file
   ansible.builtin.replace:
