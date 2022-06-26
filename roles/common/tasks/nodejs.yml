@@ -1,8 +1,3 @@
-
-#PRINT "Installing ${COMPONENT} dependencies for ${COMPONENT} component "
-# mv ${COMPONENT}-main ${COMPONENT} && cd ${COMPONENT} && npm install &>>${LOG}
-# CHECK_STAT $?
-
 - name: Setup Yum repo for Nodejs
   ansible.builtin.shell: curl -sL https://rpm.nodesource.com/setup_lts.x
 
@@ -18,4 +13,4 @@
 
 - name: Install nodejs dependencies
   community.general.npm:
-   path: "{{ APP_LOCATION }}"
+    path: "{{ APP_LOCATION }}"
