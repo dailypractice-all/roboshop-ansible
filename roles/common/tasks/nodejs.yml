@@ -1,7 +1,7 @@
 - name: Setup Yum repo for npm
   ansible.builtin.shell: curl -sL https://rpm.nodesource.com/setup_lts.x
 
-- name: Install Nodejs
+- name: Install npm
   ansible.builtin.yum:
     name: npm
     state: installed
