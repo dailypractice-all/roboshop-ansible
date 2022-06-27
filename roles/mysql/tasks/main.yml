@@ -39,13 +39,13 @@
   ansible.builtin.set_fact:
     DEFAULT_PASSWORD: "{{mysql_log['content'] | b64decode | regex_findall('.*temporary password.*') | join(' ')| split(' ') | last}}"
 
-- name: Check mysql password has been reset or not
+- name: Check MySQL Password has been reset or not
   community.mysql.mysql_info:
     login_user: root
     login_password: "{{MYSQL_PASSWORD}}"
     filter: version
-    ignore_errors: yes
-    register: mysql_conn
+  ignore_errors: yes
+  register: mysql_conn
 
 - name: Reset MySql Password
   ansible.builtin.shell: echo "ALTER USER 'root'@'localhost' IDENTIFIED BY '{{MYSQL_PASSWORD}}';" | mysql --connect-expired-password -uroot -p"{{DEFAULT_PASSWORD}}"
