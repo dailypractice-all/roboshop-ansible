@@ -1,12 +1,4 @@
 
-#PRINT "Download Schema"
-#curl -s -L -o /tmp/mysql.zip "https://github.com/roboshop-devops-project/mysql/archive/main.zip" &>>${LOG}
-#CHECK_STAT $?
-
-#PRINT "Load Schema"
-#cd /tmp && unzip -o mysql.zip &>>${LOG} && cd mysql-main && mysql -u root -p"${MYSQL_PASSWORD}" <shipping.sql &>>${LOG}
-#CHECK_STAT $?
-
 - name: Fail if the password MYSQL_PASSWORD does not exist
   ansible.builtin.fail:
     msg: MYSQL_PASSWORD variable is missing
@@ -59,3 +51,17 @@
 - name: Remove validate password plugins
   ansible.builtin.shell: echo "uninstall plugin validate_password;" | mysql -uroot -p"{{MYSQL_PASSWORD}}"
   when: plugin_info is succeeded
+
+- name: Download & Extract {{ COMPONENT }} Component Archive
+  ansible.builtin.unarchive:
+    src: https://github.com/roboshop-devops-project/{{ COMPONENT }}/archive/main.zip
+    dest: /tmp
+    remote_src: yes
+
+- name: Load Schema
+  community.mysql.mysql_db:
+    state: import
+    name: all
+    target: /tmp/mysql-main/shipping.sql
+    login_user: root
+    login_password: "{{MYSQL_PASSWORD}}"
