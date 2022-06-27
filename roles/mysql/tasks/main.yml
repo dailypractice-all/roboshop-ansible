@@ -37,9 +37,9 @@
     state: started
     enabled: yes
 
-- name: Fetch the password from mysql log file
+- name: Fetch Password from MySQL LOG File
   ansible.builtin.set_fact:
-    DEFAULT_PASSWORD: "{{mysql_log['content'] | b64decode | regex_findall('.*temporary password.*') | join(' ')| split (' ') | last}}"
+    DEFAULT_PASSWORD: "{{mysql_log['content'] | b64decode | regex_findall('.*temporary password.*') | join(' ')| split(' ') | last}}"
 
 - name: Check mysql password has been reset or not
   community.mysql.mysql_info:
@@ -57,3 +57,7 @@
   ansible.builtin.shell: echo show plugins | mysql -uroot -p"{{MYSQL_PASSWORD}}" | grep validate_password
   register: plugin_info
   ignore_errors: yes
+
+- name: Remove validate password plugins
+  ansible.builtin.shell: echo "uninstall plugin validate_password;" | mysql -uroot -p"{{MYSQL_PASSWORD}}"
+  when: plugin_info is succeeded
