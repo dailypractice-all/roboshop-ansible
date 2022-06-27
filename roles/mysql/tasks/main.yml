@@ -1,0 +1,69 @@
+
+
+#MYSQL_DEFAULT_PASSWORD=$(grep 'temporary password' /var/log/mysqld.log | awk '{print $NF}')
+
+#echo show databases | mysql -uroot -p"${MYSQL_PASSWORD}" &>>${LOG}
+#if [ $? -ne 0 ]; then
+#PRINT "RESET Root Password"
+#echo "ALTER USER 'root'@'localhost' IDENTIFIED BY '${MYSQL_PASSWORD}';" | mysql --connect-expired-password -uroot -p"${MYSQL_DEFAULT_PASSWORD}" &>>${LOG}
+#CHECK_STAT $?
+#fi
+
+#echo show plugins  | mysql -uroot -p"${MYSQL_PASSWORD}" 2>>${LOG} | grep validate_password &>>${LOG}
+#if [ $? -eq 0 ]; then
+#PRINT "Uninstall Password Validate Plugin"
+#echo "uninstall plugin validate_password;" | mysql -uroot -p"${MYSQL_PASSWORD}" &>>${LOG}
+#CHECK_STAT $?
+#fi
+
+#PRINT "Download Schema"
+#curl -s -L -o /tmp/mysql.zip "https://github.com/roboshop-devops-project/mysql/archive/main.zip" &>>${LOG}
+#CHECK_STAT $?
+
+#PRINT "Load Schema"
+#cd /tmp && unzip -o mysql.zip &>>${LOG} && cd mysql-main && mysql -u root -p"${MYSQL_PASSWORD}" <shipping.sql &>>${LOG}
+#CHECK_STAT $?
+
+- name: Fail if the password MYSQL_PASSWORD does not exist
+  ansible.builtin.fail:
+    msg: MYSQL_PASSWORD variable is missing
+  when: MYSQL_PASSWORD is undefined
+
+- name: Copy MYSQL repo file
+  ansible.builtin.template:
+    src: mysql.repo
+    dest: /etc/yum.repos.d/mysql.repo
+
+- name: Install mysql community server
+  ansible.builtin.yum:
+    name:
+      - mysql-community-server
+      - MySql-python
+    state: installed
+
+- name: Start mysql service
+  ansible.builtin.systemd:
+    name: mysqld
+    state: started
+    enabled: yes
+
+- name: Fetch mysql log file
+  ansible.builtin.slurp:
+    src: /var/log/mysqld.log
+  register: mysql_log
+
+- name: Fetch the password from mysql log file
+  ansible.builtin.set_fact:
+    DEFAULT_PASSWORD: "{{mysql_log['content'] | b64decode | regex_findall('.*temporary password.*') | joint(' ')| split (' ') | last}}"
+
+- name: Check mysql password has been reset or not
+  community.mysql.mysql_info:
+    login_user: root
+    login_password: "{{MYSQL_PASSWORD}}"
+    filter: version
+    ignore_errors: yes
+    register: mysql_conn
+
+- name: Reset MySql Password
+  ansible.builtin.shell: echo "ALTER USER 'root'@'localhost' IDENTIFIED BY '{{MYSQL_PASSWORD}';" | mysql --connect-expired-password -uroot -p"{{MYSQL_DEFAULT_PASSWORD}}"
+  when: mysql_conn is failed
