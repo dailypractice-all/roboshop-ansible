@@ -30,7 +30,7 @@
     state: started
     enabled: yes
 
-- name: Fetch Password from MySQL LOG File
+- name: Fetch Password from mysql log File
   ansible.builtin.set_fact:
     DEFAULT_PASSWORD: "{{mysql_log['content'] | b64decode | regex_findall('.*temporary password.*') | join(' ')| split(' ') | last}}"
 
