@@ -1,0 +1,45 @@
+
+#
+#   PRINT "Install ${COMPONENT} Dependencies"
+#   mv ${COMPONENT}-main ${COMPONENT} && cd /home/roboshop/${COMPONENT} && pip3 install -r requirements.txt &>>${LOG}
+#  CHECK_STAT $?
+
+#  USER_ID=$(id -u roboshop)
+#  GROUP_ID=$(id -g roboshop)
+
+#  PRINT "Update ${COMPONENT} Configuration"
+#  sed -i -e "/^uid/ c uid = ${USER_ID}" -e "/^gid/ c gid = ${GROUP_ID}" /home/roboshop/${COMPONENT}/${COMPONENT}.ini
+# CHECK_STAT $?
+
+# SYSTEMD
+
+- name: Install Setup of Python
+  ansible.builtin.yum:
+    name:
+      - python36
+      - gcc
+      - python3-devel
+    state: installed
+
+- name: Import Common App Setup Configurations
+  ansible.builtin.include_role:
+    name: common
+    tasks_from: download
+
+- name: Import Python dependencies
+  ansible.builtin.pip:
+    requirements: /home/roboshop/{{COMPONENT}}/requirement.txt
+    executable: pip3
+
+- name: Update UID and GID in Application Configuration
+  ansible.builtin.lineinfile:
+    path: /home/roboshop/{{COMPONENT}}/{{COMPONENT}}.ini
+    regexp: '^{{ITEM.KEY}}'
+    line: "{{item.line}}"
+      - {key: "uid", line: "uid = {{app_user.uid}}"}
+      - {key: "gid", line: "gid = {{app_user.group}}"}
+
+- name: Configure Systemd {{ COMPONENT }} Service
+  ansible.builtin.include_role:
+    name: common
+    tasks_from: systemd
