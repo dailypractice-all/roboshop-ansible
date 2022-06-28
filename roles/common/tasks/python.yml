@@ -26,4 +26,7 @@
     - {key: "uid", line: "uid = {{app_user.uid}}"}
     - {key: "gid", line: "gid = {{app_user.group}}"}
 
-
+- name: Configure Systemd {{ COMPONENT }} Service
+  ansible.builtin.include_role:
+    name: common
+    tasks_from: systemd
