@@ -1,0 +1,7 @@
+- name: Restart nginx service
+  ansible.builtin.systemd:
+    name: nginx
+    state: restarted
+    enabled: yes
+
+, in this we will use notify word before starting service of that machine
