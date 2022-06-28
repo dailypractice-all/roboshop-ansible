@@ -26,8 +26,15 @@
     - {key: "uid", line: "uid = {{app_user.uid}}"}
     - {key: "gid", line: "gid = {{app_user.group}}"}
 
-- name: SystemD Setup for {{ COMPONENT }} Service
-  ansible.builtin.include_role:
-    name: common
-    tasks_from: systemd
+- name: Setup {{ COMPONENT }} SystemD Service
+  ansible.builtin.template:
+    src: systemd.service
+    dest: /etc/systemd/system/{{ COMPONENT }}.service
+
+- name: Start {{ COMPONENT }} Service
+  ansible.builtin.systemd:
+    name: "{{ COMPONENT }}"
+    enabled: yes
+    state: restarted
+    daemon_reload: yes
 
