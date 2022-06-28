@@ -1,0 +1,59 @@
+- name: Run frontend Setup
+  hosts: FRONTEND
+  become: yes
+  roles:
+    - "frontend"
+
+- name: Run mongodb Setup
+  hosts: MONGODB
+  become: yes
+  roles:
+    - "mongodb"
+
+- name: Run catalogue Setup
+  hosts: CATALOGUE
+  become: yes
+  roles:
+    - "catalogue"
+
+- name: Run cart Setup
+  hosts: CART
+  become: yes
+  roles:
+    - "cart"
+
+- name: Run mysql Setup
+  hosts: MYSQL
+  become: yes
+  roles:
+    - "mysql"
+
+- name: Run redis Setup
+  hosts: REDIS
+  become: yes
+  roles:
+    - "redis"
+
+- name: Run USER Setup
+  hosts: USER
+  become: yes
+  roles:
+    - "user"
+
+- name: Run rabbitmq Setup
+  hosts: RABBITMQ
+  become: yes
+  roles:
+    - "rabbitmq"
+
+- name: Run shipping Setup
+  hosts: SHIPPING
+  become: yes
+  roles:
+    - "shipping"
+
+- name: Run payment Setup
+  hosts: PAYMENT
+  become: yes
+  roles:
+    - "payment"
