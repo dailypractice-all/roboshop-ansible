@@ -1,5 +1,5 @@
 COMPONENT: payment
 APP_LOCATION: /home/roboshop/payment
 SUFFIX: /
-"{{app_user.uid}}" = 1001
-"{{app_user.group}}" = 1001
+"{{app_user.uid}}" = {{ 1001 }}
+"{{app_user.group}}" = {{ 1001 }}
