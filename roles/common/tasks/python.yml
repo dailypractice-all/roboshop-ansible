@@ -17,9 +17,6 @@
     requirements: /home/roboshop/{{COMPONENT}}/requirements.txt
     executable: pip3
 
-- name: Print
-  debug:
-    msg: "{{app_user}}"
 
 - name: Update UID and GID in Application Configuration
   ansible.builtin.lineinfile:
@@ -30,15 +27,8 @@
     - {key: "uid", line: "uid = {{app_user.uid}}"}
     - {key: "gid", line: "gid = {{app_user.group}}"}
 
-- name: Setup {{ COMPONENT }} SystemD Service
-  ansible.builtin.template:
-    src: systemd.service
-    dest: /etc/systemd/system/{{ COMPONENT }}.service
-
-- name: Start {{ COMPONENT }} Service
-  ansible.builtin.systemd:
-    name: "{{ COMPONENT }}"
-    enabled: yes
-    state: restarted
-    daemon_reload: yes
+- name: Configure Systemd
+  ansible.builtin.include_role:
+    name: common
+    tasks_from: systemd
 
