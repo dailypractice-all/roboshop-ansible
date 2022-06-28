@@ -7,7 +7,7 @@ catalogue.dailypractice.internal
 [SHIPPING]
 shipping.dailypractice.internal
 [PAYMENT]
-payment.dailypractice.internal
+payment1.dailypractice.internal
 [MONGODB]
 mongodb1.dailypractice.internal
 [MYSQL]
