@@ -20,7 +20,7 @@
 - name: Update UID and GID in Application Configuration
   ansible.builtin.lineinfile:
     path: /home/roboshop/{{COMPONENT}}/{{COMPONENT}}.ini
-    regexp: '^{{ITEM.KEY}}'
+    regexp: '^{{item.key}}'
     line: "{{item.line}}"
       - {key: "uid", line: "uid = {{app_user.uid}}"}
       - {key: "gid", line: "gid = {{app_user.group}}"}
