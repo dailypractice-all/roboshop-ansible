@@ -13,13 +13,6 @@
     src: roboshop.conf
     dest: /etc/nginx/default.d/roboshop.conf
 
-- name: Copy {{ COMPONENT }} Code to app location
-  ansible.builtin.copy:
-    src: /tmp/{{COMPONENT}}-main/{{SUFFIX}}
-    dest: "{{ APP_LOCATION }}"
-    remote_src: yes
-  notify: Restart nginx service
-
 - name: Start nginx service
   ansible.builtin.systemd:
     name: nginx
