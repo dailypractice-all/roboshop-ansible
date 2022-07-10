@@ -37,7 +37,7 @@
 
 - name: Declare URL fact
   ansible.builtin.set_fact:
-    URL: http://nexus.dailypractice.internal:8081/repository/{{COMPONENT}}/{{ENV}}-{{COMPONENT}}-{{APP_VERSION}}.zip
+    URL: http://3.238.154.28:8081/repository/{{COMPONENT}}/{{ENV}}-{{COMPONENT}}-{{APP_VERSION}}.zip
   when: APP_VERSION is defined
 
 - name: Download & Extract {{ COMPONENT }} Component Archive from Nexus
