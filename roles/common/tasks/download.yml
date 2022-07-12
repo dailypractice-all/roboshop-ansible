@@ -26,14 +26,14 @@
 #    remote_src: yes
 
 - name: Get Latest Version of Appication from Nexus
-  ansible.builtin.shell: curl -s http://nexus.dailypractice.internal:8081/service/rest/repository/browse/{{COMPONENT}}/  | grep zip | grep "{{ENV}}-{{COMPONENT}}" | sed -e 's/"/ /g' | xargs -n1 | grep ^http
+  ansible.builtin.shell: curl -s http://nexus.dailypractice.internal:8081/service/rest/repository/browse/{{COMPONENT}}/ | grep zip | grep "{{ENV}}-{{COMPONENT}}" | sed -e 's/"/ /g' | xargs -n1 | grep ^http
   register: out
   when: APP_VERSION is not defined
 
 - name: Declare URL fact of latest version
   ansible.builtin.set_fact:
     URL: "{{out.stdout}}"
-  when: APP_VERSION is defined
+  when: APP_VERSION is not defined
 
 - name: Declare URL fact
   ansible.builtin.set_fact:
