@@ -13,8 +13,7 @@ rule_files:
 # - "second_rules.yml"
 
 scrape_configs:
-  # The job name is added as a label `job=<job_name>` to any timeseries scraped from this config.
-  - job_name: "prometheus"
-    static_configs:
-      - targets: ["172.31.27.11:9100"]
+  - job_name: "ec2_nodes"
+    ec2_sd_configs:
+      - region: us-east-1
 
