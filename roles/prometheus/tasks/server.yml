@@ -1,9 +1,14 @@
-- name: Prometheus server configuration
+- name: Prometheus Server configuration
   ansible.builtin.template:
     src: prometheus.yml
     dest: /opt/prometheus/prometheus.yml
 
-- name: Restart Prometheus
+#- name: Prometheus Alerts configuration
+#  ansible.builtin.template:
+#    src: alerts.yml
+#    dest: /opt/prometheus/alerts.yml
+
+- name: Restart prometheus
   ansible.builtin.systemd:
     name: prometheus
     state: restarted
