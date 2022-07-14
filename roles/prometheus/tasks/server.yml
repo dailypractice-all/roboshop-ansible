@@ -7,7 +7,7 @@
 - name: Prometheus alert configuration
   ansible.builtin.template:
     src: alerts.yml
-    dest: /opt/alerts/alerts.yml
+    dest: /opt/prometheus/alerts.yml
 
 - name: Restart prometheus
   ansible.builtin.systemd:
