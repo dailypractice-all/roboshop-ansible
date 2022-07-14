@@ -18,3 +18,4 @@ groups:
         annotations:{% raw %}
           summary: "Service Down - [{{ $labels.exported_name }}]"
           description: "Service Down - [{{ $labels.exported_name }}]"{% endraw %}
+{% endraw %}
