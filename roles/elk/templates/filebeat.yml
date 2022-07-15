@@ -1,12 +1,11 @@
 filebeat.inputs:
-  - type: filestream
-    id: my-filestream-id
-    enabled: false
+  - type: log
+    enabled: true
     paths:
-      - /var/log/*.log
+      - /var/log/{{COMPONENT}}.log
 
 output.elasticsearch:
-  hosts: ["localhost:9200"]
+  hosts: ["elasticsearch.dailypractice.internal:9200"]
 
 #--------------
 
@@ -22,3 +21,6 @@ processors:
   - add_cloud_metadata: ~
   - add_docker_metadata: ~
   - add_kubernetes_metadata: ~
+
+setup.template.name: "{{COMPONENT}}"
+setup.template.pattern: "{{COMPONENT}}"
