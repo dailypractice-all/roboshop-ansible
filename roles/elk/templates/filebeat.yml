@@ -24,5 +24,5 @@ processors:
   - add_kubernetes_metadata: ~
 
 setup.ilm.enabled: false
-setup.template.name: "{{COMPONENT}}"
-setup.template.pattern: "{{COMPONENT}}"
+setup.template.name: "{{COMPONENT}}-%{+yyyy.MM.dd}"
+setup.template.pattern: "{{COMPONENT}}-%{+yyyy.MM.dd}"
