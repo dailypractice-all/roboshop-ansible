@@ -17,7 +17,6 @@
   ansible.builtin.template:
     src: nginx.conf
     dest: /etc/nginx/nginx.conf
-  notify: Restart Nginx Service
 
 - name: Start nginx service
   ansible.builtin.systemd:
