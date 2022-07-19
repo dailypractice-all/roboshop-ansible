@@ -22,11 +22,6 @@ output.logstash:
   hosts: [ "elasticsearch.dailypractice.internal:5044" ]
 { % endif % }
 
-
-output.elasticsearch:
-  index: "{{COMPONENT}}-%{+yyyy.MM.dd}"
-  hosts: ["elasticsearch.dailypractice.internal:9200"]
-
 #--------------
 
 filebeat.config.modules:
@@ -41,7 +36,3 @@ processors:
   - add_cloud_metadata: ~
   - add_docker_metadata: ~
   - add_kubernetes_metadata: ~
-
-setup.ilm.enabled: false
-setup.template.name: "{{COMPONENT}}-%{+yyyy.MM.dd}"
-setup.template.pattern: "{{COMPONENT}}-%{+yyyy.MM.dd}"
