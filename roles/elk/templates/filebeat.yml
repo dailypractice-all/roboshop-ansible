@@ -1,37 +1,42 @@
 filebeat.inputs:
   - type: log
     enabled: true
-{ % if  LOG_TYPE == "json" % }
-    json.keys_under_root: true
+{% if  LOG_TYPE == "json" %}
+  json.keys_under_root: true
 {% endif %}
-    paths:
-      - {{LOG_FILE}}
-    fields:
-      env: {{ENV}}
-      component: {{COMPONENT}}
+  paths:
+    - {{LOG_FILE}}
+  fields:
+    env: {{ENV}}
+    component: {{COMPONENT}}
 {% if  COMPONENT == "shipping" %}
-multiline.type: pattern
-multiline.pattern: '^2'
-multiline.negate: true
-multiline.match: after
+  multiline.type: pattern
+  multiline.pattern: '^2'
+  multiline.negate: true
+  multiline.match: after
+{% endif %}
+{% if  COMPONENT == "payment" %}
+  include_lines: ['^\[2']
+{% endif %}
+{% if  COMPONENT == "frontend" %}
+  exclude_lines: ['*ratings*']
 {% endif %}
 
-{ % if  LOG_TYPE == "json" % }
+{% if  LOG_TYPE == "json" %}
 output.elasticsearch:
   index: "{{COMPONENT}}-%{+yyyy.MM.dd}"
   hosts: ["elasticsearch.dailypractice.internal:9200"]
 setup.ilm.enabled: false
 setup.template.name: "{{COMPONENT}}-%{+yyyy.MM.dd}"
 setup.template.pattern: "{{COMPONENT}}-%{+yyyy.MM.dd}"
-{ % endif % }
+{% endif %}
 
-{ % if  LOG_TYPE == "raw" % }
+{% if  LOG_TYPE == "raw" %}
 output.logstash:
   hosts: ["elasticsearch.dailypractice.internal:5044"]
-{ % endif % }
+{% endif %}
 
-#--------------
-
+# --------------------------
 filebeat.config.modules:
   path: ${path.config}/modules.d/*.yml
   reload.enabled: false
