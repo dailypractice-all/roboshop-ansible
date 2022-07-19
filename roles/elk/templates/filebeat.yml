@@ -17,7 +17,7 @@ multiline.match: after
 { % if  LOG_TYPE == "json" % }
 output.elasticsearch:
   index: "{{COMPONENT}}-%{+yyyy.MM.dd}"
-  hosts: [ "elasticsearch.dailypractice.internal:9200" ]
+  hosts: ["elasticsearch.dailypractice.internal:9200"]
 setup.ilm.enabled: false
 setup.template.name: "{{COMPONENT}}-%{+yyyy.MM.dd}"
 setup.template.pattern: "{{COMPONENT}}-%{+yyyy.MM.dd}"
@@ -25,7 +25,7 @@ setup.template.pattern: "{{COMPONENT}}-%{+yyyy.MM.dd}"
 
 { % if  LOG_TYPE == "raw" % }
 output.logstash:
-  hosts: [ "elasticsearch.dailypractice.internal:5044" ]
+  hosts: ["elasticsearch.dailypractice.internal:5044"]
 { % endif % }
 
 #--------------
