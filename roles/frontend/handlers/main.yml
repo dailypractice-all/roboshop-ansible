@@ -1,7 +1,5 @@
-- name: Restart nginx service
+- name: Restart Nginx Service
   ansible.builtin.systemd:
     name: nginx
     state: restarted
     enabled: yes
-
-# in this when we have made some changes in a service then we can restart that machine only by using handlers no need to start all machines by using notify command before starting nginx.
